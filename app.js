@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);let items=[],scripts=[{title:'',hook:'',body:'',cta:''}],pages=[],current=0,busy=false,token=0;
 const labels={carousel:'Conteúdos para aprovação',creative:'Criativos para aprovação',script:'Roteiros para aprovação',caption:'Legenda para aprovação'};
 const logos={};function loadImage(src){return new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=()=>reject(new Error('Não foi possível abrir uma imagem.'));i.src=src})}
-const ready=Promise.all(['color','white','black'].map(async k=>logos[k]=await loadImage('assets/logo-'+k+'.png')));
+const ready=Promise.all(['color','white','black'].map(async k=>logos[k]=await loadImage('logo-'+k+'.png')));
 function notice(t){$('status').textContent=t}let timer;function schedule(){clearTimeout(timer);timer=setTimeout(refresh,180)}
 function settings(){return{type:$('type').value,client:$('client').value.trim(),title:$('title').value.trim(),version:$('version').value.trim(),date:$('date').value,time:$('time').value,color:$('color').value,logo:$('logo').value}}
 function wrap(ctx,text,max){const out=[];for(const line of text.replace(/\r/g,'').split('\n')){let cur='';for(const word of line.split(/\s+/)){if(ctx.measureText(cur+(cur?' ':'')+word).width<=max){cur+=(cur?' ':'')+word;continue}if(cur){out.push(cur);cur=''}if(ctx.measureText(word).width>max){for(const char of word){if(ctx.measureText(cur+char).width>max){out.push(cur);cur=''}cur+=char}}else cur=word}out.push(cur)}return out}
